@@ -20,6 +20,10 @@
     "typescript": "^4.2.2"
   },
   "dependencies": {
+    "@types/inversify": "^2.0.32",
+    "inversify": "^6.2.2",
+    "inversify-express-utils": "^6.5.0",
+    "reflect-metadata": "^0.2.2",
     "yarn": "^1.22.22"
   }
 }
