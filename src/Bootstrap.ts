@@ -1,12 +1,23 @@
 import 'dotenv/config'
+import 'reflect-metadata'
 
 import { UserRepository } from './User.repository'
 import { UserService } from './User.service'
-import { UserController } from './User.controller'
+import { Container } from 'inversify'
+import { InversifyExpressServer } from 'inversify-express-utils'
+import './User.controller'
 
-/* --- Do this as last! --- */
+async function Bootstrap() {
+  const container = new Container()
+  container.bind(UserRepository).toSelf()
+  container.bind(UserService).toSelf()
 
-// NOTE: Make sure to do a named export of your userController
-const userRepo = new UserRepository()
-const userService = new UserService(userRepo)
-export const userController = new UserController(userService)
+  const server = new InversifyExpressServer(container)
+  const app = server.build()
+
+  app.listen(5004, () => {
+    console.log('Server connected on http://localhost:5004/')
+  })
+}
+
+Bootstrap()

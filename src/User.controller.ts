@@ -1,12 +1,15 @@
-import { UserRequestDto } from './Database'
+import { controller, httpGet } from 'inversify-express-utils'
 import { UserService } from './User.service'
 
-// NOTE: Make userService public and not private. This is required for the tests!
+// for api
+@controller('/users')
 export class UserController {
-  constructor(public readonly userService: UserService) {}
+  constructor(private readonly _userService: UserService) {}
 
-  async store(userData: UserRequestDto) {
-    const createdUser = this.userService.createUser(userData || 'John Doe')
-    return createdUser
+  // "/users/"
+  @httpGet('/')
+  async index() {
+    const users = await this._userService.getUsers()
+    return `number of users: ${users.length}`
   }
 }

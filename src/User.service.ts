@@ -1,12 +1,12 @@
-import { UserRequestDto } from './Database'
+import { injectable } from 'inversify'
 import { UserRepository } from './User.repository'
-
-// NOTE: Make userRepo public and not private. This is required for the tests!
+//This means this can be binded(injectable)
+@injectable()
 export class UserService {
-  constructor(public readonly userRepo: UserRepository) {}
+  constructor(private readonly _userRepo: UserRepository) {}
 
-  async createUser(userData: UserRequestDto) {
-    const createdUser = this.userRepo.createUser(userData)
-    return createdUser
+  async getUsers() {
+    const users = this._userRepo.getUsers()
+    return users
   }
 }

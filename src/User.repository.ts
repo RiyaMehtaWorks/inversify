@@ -1,11 +1,10 @@
-import Database, { UserRequestDto } from './Database'
+import { injectable } from 'inversify'
 
-// NOTE: Make db public instead of private. This is required for the tests.
+@injectable()
 export class UserRepository {
-  public readonly db = Database
+  //   private readonly _db = Database
 
-  async createUser(userData: UserRequestDto) {
-    const createdUser = await this.db.create(userData)
-    return createdUser
+  public async getUsers() {
+    return []
   }
 }
